@@ -101,19 +101,17 @@ class FetchUsersTest {
          *         new BigDecimal("1.0").equals(new BigDecimal(1))
          *         
          *   return false. The same is often true for double values because of rounding errors.
-         * - It just tells us that there is a difference but not what the difference is. This
-         *   doesn't matter as long as the test passes but you'll spend a lot of time as soon as
-         *   it fails.
-         * - Comparing individual objects hides the list structure; it's hard or impossible to tell
-         *   apart missing from extra elements and the same is true when the order of elements
-         *   changes.
+         * - When the test fails, you will now know which property made it fail.
+         * - Comparing individual objects in a loop means you only see the first failure.
+         *   It also makes it hard to see missing or additional objects or changes in the
+         *   object order.
          * - We could write code which examines both lists and then prints explanations like
          *   "element #3 was expected in position #1" but that would have the following drawbacks:
          *     1. This would be very complicated code
          *     2. The developer needs to read and understand the messages. This often means to
          *        create a mental image of the lists which is error prone. My approach displays
-         *        both lists. The developer can use her/his full mental capacity to understand
-         *        the issue, instead of wasting effort on building the lists in memory.
+         *        both lists in a diff view. The developer can use her/his full mental capacity
+         *        to understand the issue, instead of wasting effort on building the lists in memory.
          *     3. Are you sure that the output of this code would always be correct? There are
          *        lots of edge cases which you have to consider: Duplicate elements, one or more
          *        missing elements, one or more additional elements ... on both sides. 
@@ -121,7 +119,9 @@ class FetchUsersTest {
          * We can easily avoid all these problems by using a special toString() method for tests
          * and then collect the strings in a multi-line text. Every software developer can work
          * with diff views, that's our daily business. We can quickly see in those views when lines
-         * shift, are duplicated or missing. Our brains are already trained for this.
+         * shift, are duplicated or missing. Our brains are already trained for this. Any
+         * other approach means that developers need to learn how to use this special
+         * knowledge first and the knowledge won't be useful elsewhere. 
          */
     }
 }
